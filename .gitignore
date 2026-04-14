@@ -6,7 +6,6 @@
 .github/
 github-org-settings/
 /app-portal/
-/deploy-app-portal/
 catalog/
 catalog-orders/
 docusaurus/

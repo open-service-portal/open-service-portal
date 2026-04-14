@@ -80,7 +80,6 @@ open-service-portal/         # THIS directory = portal-workspace repo
 ├── catalog-orders/         # NESTED repo - XR instances from Backstage
 │   └── (structure managed by template publishPhase)
 ├── concepts/               # Architecture and design documentation
-├── deploy-app-portal/      # NESTED repo - Kubernetes deployment manifests
 │
 ├── template-dns-record/    # NESTED repo - Mock DNS template
 │   └── configuration/
@@ -164,7 +163,7 @@ git clone https://github.com/open-service-portal/ingestor.git
 - **service-cluster-template/** - Kubernetes cluster provisioning (git@github.com:open-service-portal/service-cluster-template.git)
 
 #### Deployment & Infrastructure
-- **deploy-app-portal/** - Kubernetes deployment manifests for Backstage (git@github.com:open-service-portal/deploy-app-portal.git)
+- Kubernetes deployment manifests for Backstage live in `app-portal/deploy/kubernetes/`
 
 #### Documentation & Workspace
 - **portal-workspace/** - This workspace repository with documentation and setup scripts (git@github.com:open-service-portal/portal-workspace.git)
