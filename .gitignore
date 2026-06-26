@@ -11,6 +11,7 @@ catalog-orders/
 docusaurus/
 ingestor/
 oidc-authenticator/
+backstage-plugins/
 
 # Service Template Repositories
 templates/
