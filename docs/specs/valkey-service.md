@@ -150,7 +150,6 @@ New repo **`template-valkey`** following [template-standards.md](../template-sta
 ## 10. References
 
 - Spike findings (companion doc): [valkey-spike-findings.md](./valkey-spike-findings.md)
-- Operator source (local): `_work/reference/valkey-io/valkey-operator/` (`api/v1alpha1/*_types.go`, `config/samples/`)
-- Helm chart (local): `_work/reference/valkey-io/valkey-helm/`
-- Existing pattern: `template-whoami/configuration/` (XRD + Pipeline Composition)
-- Felix strawman (not yet pushed): `main/docs/specs/valkey-service.md` (his machine)
+- Operator: <https://github.com/valkey-io/valkey-operator> (`api/v1alpha1/*_types.go`, `config/samples/`)
+- Helm chart: <https://valkey.io/valkey-helm>
+- Existing pattern: `template-whoami` (XRD + Pipeline Composition)
