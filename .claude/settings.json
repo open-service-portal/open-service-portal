@@ -1,0 +1,7 @@
+{
+  "enabledPlugins": {
+    "workspace@ai-plugins-internal": true,
+    "knowledge@ai-plugins-internal": true,
+    "craft@ai-plugins-internal": true
+  }
+}
