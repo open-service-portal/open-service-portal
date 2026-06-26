@@ -102,8 +102,8 @@ open-service-portal/         # THIS directory = portal-workspace repo
 ├── service-dnsrecord-template/   # NESTED repo - DNS record service
 ├── service-cluster-template/     # NESTED repo - Cluster provisioning
 │
-├── backstage/              # LOCAL CLONE - Backstage core docs (gitignored)
-├── backstage-community-plugins/  # LOCAL CLONE - Community plugins (gitignored)
+├── backstage/              # LOCAL CLONE - Backstage core docs (gitignored, optional)
+├── backstage-community-plugins/  # LOCAL CLONE - Community plugins (gitignored, optional)
 └── scripts/                # Unified setup and utility scripts
 
 ## Setup
