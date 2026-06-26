@@ -297,6 +297,61 @@ install_provider_helm() {
     echo -e "${GREEN}✓ provider-helm installed and configured${NC}"
 }
 
+# Install the Valkey operator (supplier for ValkeyInstance templates)
+install_valkey_operator() {
+    # The Valkey operator is alpha/WIP (valkey.io/v1alpha1). We password-protect
+    # the 'default' user (see template-valkey), which requires the probe-auth fix
+    # #235 (probes connect as the '_operator' system user, not 'default'). That
+    # fix is merged on main but NOT in any release yet (latest is v0.2.0), so we
+    # build from a PINNED upstream commit and run that image, while still using
+    # the pinned Helm chart for everything else.
+    #   Revisit: switch back to a chart-version pin once a release > v0.2.0 ships
+    #   #235, then this build-from-source step can be dropped.
+    # See docs/specs/valkey-spike-findings.md.
+    VALKEY_OPERATOR_GIT_REF="5ac4d51"        # v0.2.0-12, includes #235 (d184606); the tree we validated
+    VALKEY_OPERATOR_CHART_VERSION="0.2.7"
+    VALKEY_OPERATOR_IMAGE="valkey-operator:${VALKEY_OPERATOR_GIT_REF}"
+    BUILD_DIR="$(cd "$(dirname "$0")/.." && pwd)/_work/build/valkey-operator"
+
+    echo -e "${YELLOW}Installing Valkey operator (pinned @ ${VALKEY_OPERATOR_GIT_REF}, includes probe-auth #235)...${NC}"
+
+    if ! command -v docker &> /dev/null; then
+        echo -e "${RED}Error: docker is required to build the pinned Valkey operator image${NC}"
+        echo "Install docker, or skip this step until a release > v0.2.0 (with #235) is available."
+        return 1
+    fi
+
+    # Build the image once (idempotent). NOTE: pullPolicy=Never means the image
+    # must exist in the runtime the cluster uses. This works on rancher-desktop
+    # (docker runtime). On kind/remote clusters, load/push the image instead
+    # (e.g. `kind load docker-image` or push to a registry + adjust the override).
+    if ! docker image inspect "$VALKEY_OPERATOR_IMAGE" >/dev/null 2>&1; then
+        if [ ! -d "$BUILD_DIR/.git" ]; then
+            mkdir -p "$(dirname "$BUILD_DIR")"
+            git clone https://github.com/valkey-io/valkey-operator.git "$BUILD_DIR"
+        fi
+        git -C "$BUILD_DIR" fetch --quiet origin
+        git -C "$BUILD_DIR" checkout --quiet "$VALKEY_OPERATOR_GIT_REF"
+        echo "Building operator image ${VALKEY_OPERATOR_IMAGE} (this can take a few minutes)..."
+        docker build -t "$VALKEY_OPERATOR_IMAGE" "$BUILD_DIR"
+    else
+        echo "  Image ${VALKEY_OPERATOR_IMAGE} already built, skipping build."
+    fi
+
+    helm repo add valkey https://valkey.io/valkey-helm
+    helm repo update valkey
+    helm upgrade --install valkey-operator valkey/valkey-operator \
+        -n valkey-operator-system --create-namespace \
+        --version "$VALKEY_OPERATOR_CHART_VERSION" \
+        --set image.registry="" \
+        --set global.imageRegistry="" \
+        --set image.repository="valkey-operator" \
+        --set image.tag="${VALKEY_OPERATOR_GIT_REF}" \
+        --set image.pullPolicy=Never \
+        --wait --timeout=5m
+    echo -e "${GREEN}✓ Valkey operator installed (image ${VALKEY_OPERATOR_IMAGE}, chart ${VALKEY_OPERATOR_CHART_VERSION})${NC}"
+}
+
 # Install Crossplane composition functions
 install_crossplane_functions() {
     echo -e "${YELLOW}Installing Crossplane composition functions...${NC}"
@@ -576,6 +631,7 @@ main() {
     install_cert_manager  # Install cert-manager for TLS certificates
     install_external_dns
     install_provider_helm  # Install provider-helm for Helm chart deployments
+    install_valkey_operator  # Install Valkey operator (ValkeyInstance supplier)
     install_crossplane_functions  # Install common functions
     install_environment_configs  # Install platform-wide configs
     create_service_account_with_token "backstage" "Persistent token for Backstage - shared by team"
