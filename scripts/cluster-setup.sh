@@ -297,6 +297,21 @@ install_provider_helm() {
     echo -e "${GREEN}✓ provider-helm installed and configured${NC}"
 }
 
+# Install the Valkey operator (supplier for ValkeyInstance templates)
+install_valkey_operator() {
+    echo -e "${YELLOW}Installing Valkey operator...${NC}"
+    if helm status valkey-operator -n valkey-operator-system >/dev/null 2>&1; then
+        echo -e "${GREEN}✓ Valkey operator already installed${NC}"
+        return
+    fi
+    helm repo add valkey https://valkey.io/valkey-helm
+    helm repo update valkey
+    helm upgrade --install valkey-operator valkey/valkey-operator \
+        -n valkey-operator-system --create-namespace \
+        --wait --timeout=5m
+    echo -e "${GREEN}✓ Valkey operator installed${NC}"
+}
+
 # Install Crossplane composition functions
 install_crossplane_functions() {
     echo -e "${YELLOW}Installing Crossplane composition functions...${NC}"
@@ -576,6 +591,7 @@ main() {
     install_cert_manager  # Install cert-manager for TLS certificates
     install_external_dns
     install_provider_helm  # Install provider-helm for Helm chart deployments
+    install_valkey_operator  # Install Valkey operator (ValkeyInstance supplier)
     install_crossplane_functions  # Install common functions
     install_environment_configs  # Install platform-wide configs
     create_service_account_with_token "backstage" "Persistent token for Backstage - shared by team"
