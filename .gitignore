@@ -18,8 +18,9 @@ templates/
 template-*/
 service-*-template/
 
-# Reference Repositories (for documentation search)
-# Note: backstage/ folder itself is tracked (with docs), but cloned repos inside are ignored
+# Reference Repositories (for documentation search) — optional personal clones,
+# kept wherever you like (workspace root or _work/reference/). Ignored, not enforced.
+/backstage*/
 crossplane*/
 
 # K8s Configs
