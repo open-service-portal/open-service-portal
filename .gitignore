@@ -56,3 +56,6 @@ debug/
 .local/
 *.local.*
 .env.rancher-desktop
+
+# Local-only Claude Code safety hooks (personal allowlist, not for the public repo)
+.claude/hooks/

@@ -20,8 +20,9 @@ open-service-portal/         # THIS directory = portal-workspace repo
 ├── .git/                   # portal-workspace git (own repository)
 ├── CLAUDE.md               # Workspace-level context (this file)
 ├── README.md               # Workspace overview
-├── docs/                   # Shared documentation (current-state reference)
-│   ├── specs/<feature>/    # Product/tech specs, folder-per-feature (product-spec.md)
+├── specs/                  # Spec-driven specs, folder-per-feature (NNNN_product_<feature>_<topic>.md)
+│   └── <feature>/          # intent ("what & why") — NEVER under docs/ (intent ≠ explanation)
+├── docs/                   # Shared documentation (current-state reference / explanation)
 │   ├── decisions/          # Dated architecture/design decisions (ex-concepts/)
 │   ├── annotations.md      # Annotation namespace strategy
 │   ├── crossplane-v2-architecture.md  # Crossplane v2 overview
@@ -170,8 +171,8 @@ git clone https://github.com/open-service-portal/ingestor.git
 
 #### Documentation & Workspace
 - **portal-workspace/** - This workspace repository with documentation and setup scripts (git@github.com:open-service-portal/portal-workspace.git)
+- **specs/** - Spec-driven specs, folder-per-feature (`<feature>/NNNN_product_<feature>_<topic>.md`); intent, never under `docs/`. See [specs/README.md](./specs/README.md)
 - **docs/decisions/** - Dated architecture/design decisions (formerly `concepts/`)
-- **docs/specs/** - Product/tech specs, folder-per-feature (`<feature>/product-spec.md`)
 
 #### Local Reference Repositories (gitignored)
 - **backstage/** - Local clone of Backstage core for documentation reference
