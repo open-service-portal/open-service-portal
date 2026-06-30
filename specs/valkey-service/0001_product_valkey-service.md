@@ -126,7 +126,7 @@ The XRD is designed so these can be added as optional params later without break
 
 ## 7. Validation — spike results (2026-06-26, rancher-desktop)
 
-> Full spike write-up (commands, raw output, gotchas): [valkey-spike-findings.md](./valkey-spike-findings.md). Summary below.
+> Full spike write-up (commands, raw output, gotchas): [spike-findings.md](./spike-findings.md). Summary below.
 
 Already proven on a live cluster (Crossplane v2.0.0 + operator chart 0.2.7 / app v0.2.0):
 
@@ -149,7 +149,7 @@ New repo **`template-valkey`** following [template-standards.md](../template-sta
 
 ## 10. References
 
-- Spike findings (companion doc): [valkey-spike-findings.md](./valkey-spike-findings.md)
+- Spike findings (companion doc): [spike-findings.md](./spike-findings.md)
 - Operator: <https://github.com/valkey-io/valkey-operator> (`api/v1alpha1/*_types.go`, `config/samples/`)
 - Helm chart: <https://valkey.io/valkey-helm>
 - Existing pattern: `template-whoami` (XRD + Pipeline Composition)
