@@ -259,7 +259,7 @@ jobs:
 4. **Path resolution issues**
    ```bash
    # Scripts expect to run from workspace root
-   cd /path/to/portal-workspace
+   cd /path/to/open-service-portal
    ./scripts/template-ingest.sh ./xrd.yaml
    ```
 

@@ -41,7 +41,7 @@ Much of the documentation in this directory (especially [new-frontend-system/](.
 
 ### 1. Source Code Reference
 
-The [/backstage/](https://github.com/open-service-portal/portal-workspace/tree/main/backstage) directory in this workspace contains local clones of:
+The [/backstage/](https://github.com/open-service-portal/open-service-portal/tree/main/backstage) directory in this workspace contains local clones of:
 - **Backstage core** - Official source code and documentation
 - **Community plugins** - 100+ community plugin implementations
 - **TeraSky plugins** - Additional plugin examples

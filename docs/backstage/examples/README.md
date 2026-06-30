@@ -434,7 +434,7 @@ const myExtension = createExtension({
 ## Contributing
 
 Found a bug in an example or have a suggestion?
-1. Open an issue: [GitHub Issues](https://github.com/open-service-portal/portal-workspace/issues)
+1. Open an issue: [GitHub Issues](https://github.com/open-service-portal/open-service-portal/issues)
 2. Create a PR with fix/improvement
 3. Include test results if applicable
 

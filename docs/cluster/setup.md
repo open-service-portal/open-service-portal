@@ -33,7 +33,7 @@ yq --version
 We provide a script that automates the entire setup process:
 
 ```bash
-# Run from the portal-workspace directory
+# Run from the open-service-portal directory
 ./scripts/cluster-setup.sh
 ```
 
