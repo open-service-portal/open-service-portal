@@ -352,11 +352,11 @@ For production environments, consider migrating from client certificates to OIDC
 3. Create RoleBindings using OIDC user emails and groups
 4. Phase out client certificates
 
-See the [OIDC Authentication Guide](../../concepts/2025-10-23-oidc-kubernetes-authentication.md) for details.
+See the [OIDC Authentication Guide](../decisions/2025-10-23-oidc-kubernetes-authentication.md) for details.
 
 ## Related Documentation
 
-- [OIDC Authentication Concept](../../concepts/2025-10-23-oidc-kubernetes-authentication.md) - Understanding OIDC auth
+- [OIDC Authentication Concept](../decisions/2025-10-23-oidc-kubernetes-authentication.md) - Understanding OIDC auth
 - [RBAC Scripts Overview](./rbac-scripts-overview.md) - Technical script details
 
 ## Script Annotations and Labels

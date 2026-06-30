@@ -20,11 +20,15 @@ open-service-portal/         # THIS directory = portal-workspace repo
 ├── .git/                   # portal-workspace git (own repository)
 ├── CLAUDE.md               # Workspace-level context (this file)
 ├── README.md               # Workspace overview
-├── docs/                   # Shared documentation
-│   ├── annotations.md      # Annotation namespace strategy ⭐ NEW
+├── docs/                   # Shared documentation (current-state reference)
+│   ├── specs/<feature>/    # Product/tech specs, folder-per-feature (product-spec.md)
+│   ├── decisions/          # Dated architecture/design decisions (ex-concepts/)
+│   ├── annotations.md      # Annotation namespace strategy
 │   ├── crossplane-v2-architecture.md  # Crossplane v2 overview
 │   ├── crossplane-catalog-setup.md    # Template management
 │   └── local-kubernetes-setup.md      # K8s setup guide
+├── plans/                  # Multi-step implementation plans (scaffolding, dropped when done)
+├── journal/                # Per-PR journal (session, result, learnings)
 ├── scripts/                # Unified setup and utility scripts
 │   ├── cluster-setup.sh    # Universal K8s cluster setup
 │   ├── cluster-config.sh   # Auto-detect cluster and configure
@@ -79,7 +83,6 @@ open-service-portal/         # THIS directory = portal-workspace repo
 │   └── templates/          # Template references (XRDs/Compositions)
 ├── catalog-orders/         # NESTED repo - XR instances from Backstage
 │   └── (structure managed by template publishPhase)
-├── concepts/               # Architecture and design documentation
 │
 ├── template-dns-record/    # NESTED repo - Mock DNS template
 │   └── configuration/
@@ -167,7 +170,8 @@ git clone https://github.com/open-service-portal/ingestor.git
 
 #### Documentation & Workspace
 - **portal-workspace/** - This workspace repository with documentation and setup scripts (git@github.com:open-service-portal/portal-workspace.git)
-- **concepts/** - Architecture and design documentation (part of workspace)
+- **docs/decisions/** - Dated architecture/design decisions (formerly `concepts/`)
+- **docs/specs/** - Product/tech specs, folder-per-feature (`<feature>/product-spec.md`)
 
 #### Local Reference Repositories (gitignored)
 - **backstage/** - Local clone of Backstage core for documentation reference
