@@ -481,7 +481,7 @@ See [`examples/README.md`](../examples/README.md) for Docker setup details.
 ## 🤝 Contributing
 
 Found an error or want to improve the documentation?
-1. Check existing issues: [GitHub Issues](https://github.com/open-service-portal/portal-workspace/issues)
+1. Check existing issues: [GitHub Issues](https://github.com/open-service-portal/open-service-portal/issues)
 2. Create a PR with your changes
 3. Update the requirements tracking if you answer new questions
 

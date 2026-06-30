@@ -31,7 +31,7 @@ To set up this workspace, clone each repository:
 
 ```bash
 # Clone the workspace (this repository)
-git clone git@github.com:open-service-portal/portal-workspace.git open-service-portal
+git clone git@github.com:open-service-portal/open-service-portal.git open-service-portal
 cd open-service-portal
 
 # Clone core application repository

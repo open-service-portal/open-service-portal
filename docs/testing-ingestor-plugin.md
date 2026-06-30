@@ -43,7 +43,7 @@ Deploy updated XRDs with new annotation namespaces to the cluster.
 **Important**: The cluster uses Flux GitOps which syncs from the `catalog` repository every 1 minute. We need to suspend this to prevent Flux from overwriting our local XRD changes.
 
 ```bash
-cd /Users/felix/work/open-service-portal/portal-workspace
+cd /Users/felix/work/open-service-portal/open-service-portal
 
 # Suspend Flux synchronization for local testing
 ./scripts/template-sync.sh stop
@@ -101,7 +101,7 @@ Test the standalone CLI tool with updated XRDs.
 #### 2.1 Test Namespace Template (Cluster-Scoped)
 
 ```bash
-cd /Users/felix/work/open-service-portal/portal-workspace
+cd /Users/felix/work/open-service-portal/open-service-portal
 
 # Generate templates from XRD
 ./scripts/template-ingest.sh template-namespace -o /tmp/test-namespace
@@ -156,7 +156,7 @@ Build the ingestor plugin and start Backstage with the updated configuration.
 #### 3.1 Install Dependencies (if needed)
 
 ```bash
-cd /Users/felix/work/open-service-portal/portal-workspace/app-portal
+cd /Users/felix/work/open-service-portal/open-service-portal/app-portal
 
 # Install dependencies
 yarn install
@@ -179,7 +179,7 @@ ls -la dist/
 Ensure you have the cluster-specific configuration:
 
 ```bash
-cd /Users/felix/work/open-service-portal/portal-workspace
+cd /Users/felix/work/open-service-portal/open-service-portal
 
 # Run cluster config script to set up Backstage config
 ./scripts/cluster-config.sh
@@ -190,7 +190,7 @@ This should create/update `app-portal/app-config.rancher-desktop.local.yaml`.
 #### 3.4 Start Backstage
 
 ```bash
-cd /Users/felix/work/open-service-portal/portal-workspace/app-portal
+cd /Users/felix/work/open-service-portal/open-service-portal/app-portal
 
 # Start Backstage (auto-detects rancher-desktop context)
 yarn start
@@ -519,7 +519,7 @@ kubectl delete managednamespace test-managed-ns
 kubectl delete namespace test-managed-ns
 
 # Resume Flux synchronization (IMPORTANT!)
-cd /Users/felix/work/open-service-portal/portal-workspace
+cd /Users/felix/work/open-service-portal/open-service-portal
 ./scripts/template-sync.sh start
 ```
 

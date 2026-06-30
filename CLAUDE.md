@@ -8,7 +8,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## Workspace Structure
 
-**IMPORTANT**: This directory IS the portal-workspace repository itself!
+**IMPORTANT**: This directory IS the open-service-portal repository itself!
 
 It serves as a parent/workspace repository that:
 - Contains shared documentation and configuration
@@ -16,8 +16,8 @@ It serves as a parent/workspace repository that:
 - These nested repositories are gitignored and managed independently
 
 ```
-open-service-portal/         # THIS directory = portal-workspace repo
-├── .git/                   # portal-workspace git (own repository)
+open-service-portal/         # THIS directory = open-service-portal repo
+├── .git/                   # open-service-portal git (own repository)
 ├── CLAUDE.md               # Workspace-level context (this file)
 ├── README.md               # Workspace overview
 ├── specs/                  # Spec-driven specs, folder-per-feature (NNNN_product_<feature>_<topic>.md)
@@ -116,10 +116,10 @@ To set up the complete workspace, clone all repositories:
 
 ```bash
 # Clone the workspace
-git clone https://github.com/open-service-portal/portal-workspace.git
+git clone https://github.com/open-service-portal/open-service-portal.git
 
 # Navigate to the workspace
-cd portal-workspace
+cd open-service-portal
 
 # Clone the app-portal code repository inside the workspace
 git clone https://github.com/open-service-portal/app-portal.git
@@ -170,7 +170,7 @@ git clone https://github.com/open-service-portal/ingestor.git
 - Kubernetes deployment manifests for Backstage live in `app-portal/deploy/kubernetes/`
 
 #### Documentation & Workspace
-- **portal-workspace/** - This workspace repository with documentation and setup scripts (git@github.com:open-service-portal/portal-workspace.git)
+- **open-service-portal/** - This workspace repository with documentation and setup scripts (git@github.com:open-service-portal/open-service-portal.git)
 - **specs/** - Spec-driven specs, folder-per-feature (`<feature>/NNNN_product_<feature>_<topic>.md`); intent, never under `docs/`. See [specs/README.md](./specs/README.md)
 - **docs/decisions/** - Dated architecture/design decisions (formerly `concepts/`)
 

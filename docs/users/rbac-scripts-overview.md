@@ -1,6 +1,6 @@
 # RBAC Management Scripts Overview
 
-This document provides an overview of all RBAC management scripts available in the portal-workspace.
+This document provides an overview of all RBAC management scripts available in the open-service-portal.
 
 ## Understanding Kubernetes Groups
 
