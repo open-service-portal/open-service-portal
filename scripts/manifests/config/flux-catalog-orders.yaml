@@ -1,7 +1,8 @@
 # Flux GitOps: Catalog Orders Watcher
 # Purpose: Monitors and syncs XR instances created by Backstage templates
-# Creates a context-specific Kustomization: catalog-orders-${CURRENT_CONTEXT}
-# This allows multiple contexts to coexist on the same cluster
+# Creates a cluster-specific Kustomization: catalog-orders-${CLUSTER_NAME}
+# The path matches the catalog-orders repo layout (one directory per cluster).
+# Contexts that share a cluster (e.g. cert-auth and OIDC) share one Kustomization.
 ---
 apiVersion: source.toolkit.fluxcd.io/v1
 kind: GitRepository
@@ -17,15 +18,15 @@ spec:
 apiVersion: kustomize.toolkit.fluxcd.io/v1
 kind: Kustomization
 metadata:
-  name: catalog-orders-${CURRENT_CONTEXT}
+  name: catalog-orders-${CLUSTER_NAME}
   namespace: flux-system
 spec:
   interval: 1m0s
   sourceRef:
     kind: GitRepository
     name: catalog-orders
-  # Path based on current kubectl context
-  path: "./${CURRENT_CONTEXT}"
+  # Path based on cluster name (matches the catalog-orders repo directory layout)
+  path: "./${CLUSTER_NAME}"
   prune: true
   # Force mode: Continue applying resources even if some fail
   # This prevents a single error from blocking all other resources

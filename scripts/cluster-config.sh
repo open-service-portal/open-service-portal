@@ -194,9 +194,8 @@ configure_flux_catalog_orders() {
         return 1
     fi
 
-    # Export CLUSTER_NAME for envsubst (keeping CURRENT_CONTEXT for backward compatibility)
+    # Export CLUSTER_NAME for envsubst in flux-catalog-orders.yaml
     export CLUSTER_NAME
-    export CURRENT_CONTEXT="${CLUSTER_NAME}"
 
     # Apply catalog-orders configuration with environment substitution
     if envsubst < "$MANIFEST_DIR/flux-catalog-orders.yaml" | kubectl apply -f -; then
