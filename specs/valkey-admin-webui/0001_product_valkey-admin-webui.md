@@ -31,7 +31,7 @@ Restaurant analogy: the UI is a **side dish plated with the dish** — same name
 - **AC-vaw-1-1** — When `spec.observability.webUI` is `true` (the default), the composition renders a `<name>-admin` **Deployment** and **Service** in the order's namespace. · *Test: Integration — `crossplane render` (`tests/render/webui-enabled`)*
 - **AC-vaw-1-2** — The UI Deployment's env is wired to the instance: `VALKEY_HOST`/`VALKEY_PORT` to the operator's client Service, `VALKEY_USERNAME`/`VALKEY_PASSWORD` from the instance's observed auth Secret, `VALKEY_TLS` matching the instance. · *Test: Integration — render assertion on env (`tests/render/webui-env`)*
 - **AC-vaw-1-3** — When `spec.observability.webUI` is `false`, the composition renders **no** UI Deployment or Service. · *Test: Integration — `crossplane render` (`tests/render/webui-disabled`)*
-- **AC-vaw-1-4** — The UI is reachable via `kubectl port-forward svc/<name>-admin 8080:8080`, authenticates to the password-protected instance, and shows dashboard, topology, and key browser. · *Test: E2E — manual validation on rancher-desktop (§7); not automated*
+- **AC-vaw-1-4** — The UI authenticates to the password-protected instance and shows **cluster topology and the key browser**. Browser access requires HTTPS (the app sends HSTS, so a plain `http://` port-forward is unusable — expose via the platform's Gateway API `ExposedService`). The **dashboard CPU/memory metrics and Activity/Hot-Keys do NOT populate** without the metrics sidecar (§6). This is provider-agnostic: cluster-specific values (gateway, base domain) live in the `gateway-config` EnvironmentConfig, so the offering is portable to any managed Kubernetes. · *Test: E2E — manual validation on a valkey-operator cluster (openportal, 2026-07-07); not automated*
 
 ### US-vaw-2 — No operator ownership conflict
 
@@ -53,7 +53,7 @@ spec:
 
 When `webUI: true`, in the order's namespace:
 
-1. **Deployment** `<name>-admin` — image `valkey/valkey-admin:1.0.2` (official, pinned), container port `8080`, env per AC-vaw-1-2 plus `DEPLOYMENT_MODE` (the value that makes the app self-collect metrics for one preset connection — confirmed in validation §7), readiness/liveness `GET /` on `8080`.
+1. **Deployment** `<name>-admin` — image `valkey/valkey-admin:1.0.2` (official, pinned), container port `8080`, env per AC-vaw-1-2 plus `DEPLOYMENT_MODE=K8` (the Kubernetes **registry mode** — it does NOT make the app self-collect metrics; it expects per-node metrics sidecars, see §6), readiness/liveness `GET /` on `8080`.
 2. **Service** `<name>-admin` `:8080` → the Deployment.
 
 No extra RBAC — the UI is a plain network client of Valkey.
@@ -79,8 +79,8 @@ Access: **MVP `kubectl port-forward`** to `svc/<name>-admin` (documented in the 
 
 Deploy `valkey/valkey-admin:1.0.2` manually against the live rancher-desktop instance and confirm:
 
-1. **`DEPLOYMENT_MODE`** — which value makes the app self-collect metrics for one preset env connection (vs. the K8s registry mode that expects sidecars).
-2. **Metrics coverage without sidecars** — which panels populate from the app alone (expected: dashboard, topology, key browser, send-command, command logs) vs. the deferred-B set.
+1. **`DEPLOYMENT_MODE`** — **ANSWERED — the behaviour is generic to any valkey-operator-managed Kubernetes cluster (not provider-specific; validated on openportal 2026-07-07):** `DEPLOYMENT_MODE=K8` is the registry mode that **expects per-node metrics sidecars** — there is no "self-collect metrics" value. The main backend runs a metrics orchestrator (`POST /register`, `metricsServerMap[nodeId]`); with no sidecar registering, the dashboard reports "Could not register metrics server" / "Metrics server URI not found".
+2. **Metrics coverage without sidecars** — **ANSWERED:** connect, cluster topology, key browser, and the interactive console populate from the app alone. The **dashboard CPU/memory metrics and Activity/Hot-Keys do NOT** — they are the sidecar (deferred-B) set. Blocker: the `valkey-admin-metrics` image is not yet published upstream ([valkey-admin#382](https://github.com/valkey-io/valkey-admin/issues/382)).
 3. **Auth** — the app connects using credentials from the observed Secret against the password-protected default user.
 4. **Service DNS** — the exact operator client Service name for `VALKEY_HOST`.
 
