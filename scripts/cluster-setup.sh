@@ -441,6 +441,24 @@ configure_flux_catalog() {
 }
 
 
+# Apply cluster-admin bindings for OIDC users from the checked-in list
+apply_admin_bindings() {
+    echo -e "${YELLOW}Applying cluster-admin bindings (manifests/users/admins.yaml)...${NC}"
+
+    ADMINS_MANIFEST="$(cd "$(dirname "$0")" && pwd)/manifests/users/admins.yaml"
+
+    if [ ! -f "$ADMINS_MANIFEST" ]; then
+        echo -e "${YELLOW}⚠ No admins manifest found at $ADMINS_MANIFEST, skipping${NC}"
+        return
+    fi
+
+    kubectl apply -f "$ADMINS_MANIFEST"
+
+    echo -e "${GREEN}✓ Admin bindings applied${NC}"
+    echo "  Manage the list via PR on manifests/users/admins.yaml"
+    echo "  (rbac-add-admin.sh remains for one-off use — add its bindings to the file afterwards)"
+}
+
 # Create service account with persistent token
 # Arguments:
 #   $1 - Service account name (e.g., "backstage", "github-actions")
@@ -636,6 +654,7 @@ main() {
     install_environment_configs  # Install platform-wide configs
     create_service_account_with_token "backstage" "Persistent token for Backstage - shared by team"
     create_service_account_with_token "gha-app-portal-deploy" "GitHub Actions deployment for app-portal"
+    apply_admin_bindings  # Cluster-admin bindings from manifests/users/admins.yaml
     print_summary
     run_cluster_config  # Run configuration if environment file exists
 }

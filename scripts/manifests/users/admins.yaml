@@ -1,0 +1,100 @@
+---
+# Cluster admins (OIDC users) — source of truth for explicit-admin bindings.
+#
+# This file lists every user with a cluster-admin ClusterRoleBinding on the
+# openportal cluster. Add/remove users here via PR, then apply with:
+#   kubectl apply -f scripts/manifests/users/admins.yaml
+# (also applied by scripts/cluster-setup.sh)
+#
+# For one-off/interactive use, scripts/users/rbac-add-admin.sh still works —
+# but every binding it creates should be added here afterwards, otherwise it
+# only lives in the cluster.
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRoleBinding
+metadata:
+  name: admin-fboehm-ext
+  labels:
+    rbac.openportal.dev/type: explicit-admin
+    rbac.openportal.dev/managed-by: rbac-add-admin
+  annotations:
+    rbac.openportal.dev/description: "Cluster admin access for fboehm.ext@cloudpunks.de"
+subjects:
+- kind: User
+  name: "oidc:fboehm.ext@cloudpunks.de"
+  apiGroup: rbac.authorization.k8s.io
+roleRef:
+  kind: ClusterRole
+  name: cluster-admin
+  apiGroup: rbac.authorization.k8s.io
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRoleBinding
+metadata:
+  name: admin-mbrueckner
+  labels:
+    rbac.openportal.dev/type: explicit-admin
+    rbac.openportal.dev/managed-by: rbac-add-admin
+  annotations:
+    rbac.openportal.dev/description: "Cluster admin access for mbrueckner@cloudpunks.de"
+subjects:
+- kind: User
+  name: "oidc:mbrueckner@cloudpunks.de"
+  apiGroup: rbac.authorization.k8s.io
+roleRef:
+  kind: ClusterRole
+  name: cluster-admin
+  apiGroup: rbac.authorization.k8s.io
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRoleBinding
+metadata:
+  name: admin-mstingl
+  labels:
+    rbac.openportal.dev/type: explicit-admin
+    rbac.openportal.dev/managed-by: rbac-add-admin
+  annotations:
+    rbac.openportal.dev/description: "Cluster admin access for mstingl@cloudpunks.de"
+subjects:
+- kind: User
+  name: "oidc:mstingl@cloudpunks.de"
+  apiGroup: rbac.authorization.k8s.io
+roleRef:
+  kind: ClusterRole
+  name: cluster-admin
+  apiGroup: rbac.authorization.k8s.io
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRoleBinding
+metadata:
+  name: admin-sftoma
+  labels:
+    rbac.openportal.dev/type: explicit-admin
+    rbac.openportal.dev/managed-by: rbac-add-admin
+  annotations:
+    rbac.openportal.dev/description: "Cluster admin access for sftoma@cloudpunks.de"
+subjects:
+- kind: User
+  name: "oidc:sftoma@cloudpunks.de"
+  apiGroup: rbac.authorization.k8s.io
+roleRef:
+  kind: ClusterRole
+  name: cluster-admin
+  apiGroup: rbac.authorization.k8s.io
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRoleBinding
+metadata:
+  name: admin-primann
+  labels:
+    rbac.openportal.dev/type: explicit-admin
+    rbac.openportal.dev/managed-by: rbac-add-admin
+  annotations:
+    rbac.openportal.dev/description: "Cluster admin access for primann@cloudpunks.de"
+subjects:
+- kind: User
+  name: "oidc:primann@cloudpunks.de"
+  apiGroup: rbac.authorization.k8s.io
+roleRef:
+  kind: ClusterRole
+  name: cluster-admin
+  apiGroup: rbac.authorization.k8s.io
