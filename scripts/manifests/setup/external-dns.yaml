@@ -20,9 +20,10 @@ rules:
   - apiGroups: ["extensions","networking.k8s.io"]
     resources: ["ingresses"]
     verbs: ["get","watch","list"]
-  # For the Gateway API HTTPRoute source (#139)
+  # For the Gateway API HTTPRoute source (#139) — only the two kinds the
+  # gateway-httproute source reads (the Gateway for its address + the routes).
   - apiGroups: ["gateway.networking.k8s.io"]
-    resources: ["gateways","httproutes","grpcroutes","tlsroutes","tcproutes","udproutes"]
+    resources: ["gateways","httproutes"]
     verbs: ["get","watch","list"]
   - apiGroups: [""]
     resources: ["nodes"]

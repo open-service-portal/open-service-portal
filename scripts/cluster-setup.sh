@@ -74,6 +74,9 @@ bootstrap_flux_infrastructure() {
     echo -e "${YELLOW}Bootstrapping Flux-managed baseplate (Gateway API)...${NC}"
 
     local repo_url="${PLATFORM_REPO_URL:-https://github.com/open-service-portal/open-service-portal}"
+    # Defaults to main. To test this baseplate BEFORE it is merged, point Flux at
+    # the PR branch: PLATFORM_REPO_BRANCH=feat/gitops-baseplate ./cluster-setup.sh
+    # (on main, ./clusters/openportal only exists once the PR has merged).
     local repo_branch="${PLATFORM_REPO_BRANCH:-main}"
 
     kubectl apply -f - <<EOF

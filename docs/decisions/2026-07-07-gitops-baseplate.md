@@ -84,4 +84,7 @@ infrastructure/
   until cert-manager is up. Clean once cert-manager moves to Flux (slice 1).
 - **Untested on a fresh cluster:** the k3s 8000/8443 listener ports are not
   exercised on non-k3s dev clusters.
+- **Pre-merge testing:** the bootstrap GitRepository defaults to `main`, but
+  `clusters/openportal` only exists on `main` after this PR merges. To try it
+  from the branch, set `PLATFORM_REPO_BRANCH=feat/gitops-baseplate`.
 - **Decision needed:** proceed with GitOps (this proposal) or stay inline (T1)?

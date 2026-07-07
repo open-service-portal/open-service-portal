@@ -17,8 +17,10 @@ spec:
   chart:
     spec:
       chart: traefik
-      # TODO: pin to the chart version the live cluster runs (Traefik v3).
-      version: "33.2.1"
+      # Latest stable chart (bundles Traefik v3.7.6). Requires the Gateway API
+      # CRDs to be present first — satisfied by infra-crds (dependsOn).
+      # TODO: confirm against the version the live cluster runs.
+      version: "41.0.2"
       sourceRef:
         kind: HelmRepository
         name: traefik
@@ -51,11 +53,14 @@ spec:
         expose:
           default: true
         exposedPort: 80
-        redirections:
-          entryPoint:
-            to: websecure
-            scheme: https
-            permanent: true
+        # Redirect HTTP -> HTTPS at the entrypoint.
+        # Chart schema nests this under `http.redirections` (NOT ports.web.redirections).
+        http:
+          redirections:
+            entryPoint:
+              to: websecure
+              scheme: https
+              permanent: true
       websecure:
         port: 8443
         expose:
