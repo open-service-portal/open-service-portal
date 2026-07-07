@@ -84,6 +84,24 @@ roleRef:
 apiVersion: rbac.authorization.k8s.io/v1
 kind: ClusterRoleBinding
 metadata:
+  name: admin-jmarkert
+  labels:
+    rbac.openportal.dev/type: explicit-admin
+    rbac.openportal.dev/managed-by: rbac-add-admin
+  annotations:
+    rbac.openportal.dev/description: "Cluster admin access for jmarkert@cloudpunks.de"
+subjects:
+- kind: User
+  name: "oidc:jmarkert@cloudpunks.de"
+  apiGroup: rbac.authorization.k8s.io
+roleRef:
+  kind: ClusterRole
+  name: cluster-admin
+  apiGroup: rbac.authorization.k8s.io
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRoleBinding
+metadata:
   name: admin-primann
   labels:
     rbac.openportal.dev/type: explicit-admin
