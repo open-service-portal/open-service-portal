@@ -58,6 +58,29 @@ You rarely write `~/.kube/config` by hand:
   kubectl config set-context my-cluster --cluster=my-cluster --user=me
   ```
 
+### No `rancher-desktop` context? Work the list top-down
+
+The context only appears after Rancher Desktop's Kubernetes has started
+successfully at least once. If `kubectl config get-contexts` doesn't show it:
+
+1. **Is Rancher Desktop running?** Start the app (menu-bar icon must be
+   there). No app, no context.
+2. **Is Kubernetes enabled?** Preferences → Kubernetes → *Enable Kubernetes*
+   (it can be switched off; container runtime alone doesn't create a
+   context). Apply and let it restart.
+3. **Give the first start time.** The initial k3s start downloads images —
+   the context is written only once Kubernetes is actually up.
+4. **Is `KUBECONFIG` pointing elsewhere?** Rancher Desktop writes to
+   `~/.kube/config`. If `echo $KUBECONFIG` shows a custom path, kubectl reads
+   that file instead and the context is invisible to you. Unset it or merge
+   the files.
+5. **Which kubectl are you running?** Rancher Desktop ships its own CLI in
+   `~/.rd/bin` (Preferences → Application → Path management). `which kubectl`
+   tells you whether an unexpected binary/config combination is in play.
+6. **Still nothing:** restart the VM — `rdctl shutdown && rdctl start` (or
+   quit/reopen the app). Last resort: `rdctl factory-reset` and enable
+   Kubernetes again — this wipes the local cluster.
+
 ## 3. Selecting a context
 
 ```bash
