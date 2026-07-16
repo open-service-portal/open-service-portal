@@ -1,0 +1,16 @@
+# Secret-scan config for the leak-scan gate. Extends the upstream default rules,
+# and allowlists a few files that intentionally contain ILLUSTRATIVE example
+# secrets (documentation walkthroughs + an examples/ manifest), confirmed not
+# live. Real secrets anywhere else are still caught.
+title = "open-service-portal secret-scan"
+
+[extend]
+useDefault = true
+
+[allowlist]
+description = "Illustrative example secrets in docs/ and examples/ (verified not live)."
+paths = [
+  '''(^|/)docs/cluster-auth-implementation-summary\.md$''',
+  '''(^|/)docs/cluster-auth/certificate-authentication-explained\.md$''',
+  '''(^|/)examples/crossplane-rancher-examples/postgres-secret\.yaml$''',
+]

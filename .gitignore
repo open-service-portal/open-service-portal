@@ -59,3 +59,6 @@ debug/
 
 # Local-only Claude Code safety hooks (personal allowlist, not for the public repo)
 .claude/hooks/
+
+# real denylist = the internal names you hide; never commit it (only .example is shared)
+.git-deny-patterns
